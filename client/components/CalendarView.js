@@ -1,9 +1,10 @@
 import React from 'react';
+import Calendar from './Calendar';
 
 const CalendarView = function () {
   return (
     <div>
-      <div>Calendar View</div>
+      <Calendar />
     </div>
   )
 }
