@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getEventArray} from '../reducers/calendar.reducer.js'
+import {getEventArray} from '../reducers/calendar.reducer.js';
+import * as actions from '../actions/calendar.actions.js';
 
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -13,6 +14,7 @@ function Calendar (props) {
     <div className='calendar-wrap'>
       <BigCalendar
         events={props.events}
+        onSelectEvent={props.handleEventClick}
         startAccessor='startDate'
         endAccessor='endDate'
         titleAccessor='title'
@@ -27,13 +29,18 @@ function Calendar (props) {
 }
 
 Calendar.propTypes = {
-  events: React.PropTypes.array
+  events: React.PropTypes.array,
+  handleEventClick: React.PropTypes.func
 }
 
-function mapStateToProps (state) {
-  return {
-    events: getEventArray(state.calendar)
-  }
-}
+const mapStateToProps = (state) => ({
+  events: getEventArray(state.calendar)
+})
 
-export default connect(mapStateToProps)(Calendar);
+const mapDispatchToProps = (dispatch) => ({
+  handleEventClick: function (eventObj) {
+      dispatch(actions.focusEventView(eventObj.id));
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

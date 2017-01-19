@@ -11,15 +11,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import {createStore, combineReducers} from 'redux';
+import createLogger from 'redux-logger';
 import calendar from './reducers/calendar.reducer.js';
 
 let reducer = combineReducers({
   calendar
 })
 
-let store = createStore(reducer);
+let store = createStore(reducer, applyMiddleware(createLogger()));
 
 reactDOM.render(
   <Provider store={store}>
@@ -36,5 +37,3 @@ reactDOM.render(
   ,
   document.getElementById('app')
 );
-
-const About = () => (<div>hello</div>);

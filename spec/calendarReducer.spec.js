@@ -1,5 +1,8 @@
 import {expect} from 'chai';
-import {getEventArray, indexEventsById} from '../client/reducers/calendar.reducer.js';
+import deepFreeze from 'deep-freeze';
+import calendarReducer, {getEventArray, indexEventsById} from '../client/reducers/calendar.reducer.js';
+import * as actions from '../client/actions/calendar.actions.js';
+import * as types from '../client/types/calendar.types.js';
 
 describe('indexEventsById', function () {
   let events = [{id: 123, title: 'test1'}, {id: 456, title: 'test2'}]
@@ -35,5 +38,35 @@ describe('getEventArray', function () {
   it('to return an array of the events', function () {
     let result = [events[123], events[456]];
     expect(getEventArray(state)).to.eql(result);
+  });
+});
+
+describe('actions:', function () {
+  it('focusEventView should return the correct action', function () {
+    expect(actions.focusEventView(123)).to.eql({type: types.FOCUS_EVENT_VIEW, eventId: 123});
+  });
+  it('defocusEventView should return the correct action', function () {
+    expect(actions.defocusEventView(123)).to.eql({type: types.DEFOCUS_EVENT_VIEW});
+  });
+});
+
+describe('reducer:', function () {
+  describe('focusEventView', function () {
+    it('should set the focusedEvent property to the given eventId', function () {
+      let state = calendarReducer(undefined, {});
+      deepFreeze(state);
+      let newState = calendarReducer(state, actions.focusEventView(123));
+      expect(newState.focusedEvent).to.equal(123);
+    });
+  });
+  describe('defocusEventView', function () {
+    it('should set the focusedEvent property to null', function () {
+      let state = calendarReducer(undefined, {});
+      state  = calendarReducer(state, actions.focusEventView(123));
+      deepFreeze(state);
+
+      let newState = calendarReducer(state, actions.defocusEventView());
+      expect(newState.focusedEvent).to.be.null;
+    });
   });
 });
