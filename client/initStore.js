@@ -3,12 +3,14 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import calendar from './reducers/calendar.reducer.js';
 import auth from './reducers/auth.reducer.js';
+import resources from './reducers/resources.reducer.js';
 import actions from './actions/auth.actions.js';
 
 function initStore () {
   let reducer = combineReducers({
     calendar,
-    auth
+    auth,
+    resources
   })
 
   let store = createStore(reducer, applyMiddleware(thunk, createLogger()));

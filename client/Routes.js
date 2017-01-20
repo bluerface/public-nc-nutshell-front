@@ -5,8 +5,7 @@ import requireAuth from './components/requireAuth';
 import App from './components/App';
 import CalendarView from './components/CalendarView';
 import SigninView from './components/SigninView';
-import ResourceView from './components/ResourceView';
-
+import ResourceView from './containers/ResourceView';
 
 const Routes = () => (
   <Router history={browserHistory}>
