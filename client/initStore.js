@@ -1,6 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
+
 import calendar from './reducers/calendar.reducer.js';
 import auth from './reducers/auth.reducer.js';
 import resources from './reducers/resources.reducer.js';

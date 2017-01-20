@@ -6,6 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 import Routes from './Routes';
+
 import {Provider} from 'react-redux';
 import initStore from './initStore';
 

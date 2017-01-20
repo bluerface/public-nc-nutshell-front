@@ -5,13 +5,26 @@ import * as actions from '../actions/calendar.actions.js';
 
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import moment from 'moment';
 
 BigCalendar.momentLocalizer(moment);
 
+var newEventButtonStyle = {
+  position: 'absolute',
+  top: '75px',
+  right: '20px',
+  zIndex: '1000'
+}
+
 function Calendar (props) {
   return (
-    <div className='calendar-wrap'>
+    <div className='calendar-wrap' style={{position: 'relative'}}>
+      <FloatingActionButton secondary={true} onTouchTap={props.focusEventForm} style={newEventButtonStyle}>
+        <ContentAdd />
+      </FloatingActionButton>
+
       <BigCalendar
         events={props.events}
         onSelectEvent={props.handleEventClick}
@@ -30,7 +43,8 @@ function Calendar (props) {
 
 Calendar.propTypes = {
   events: React.PropTypes.array,
-  handleEventClick: React.PropTypes.func
+  handleEventClick: React.PropTypes.func.isRequired,
+  focusEventForm: React.PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -38,9 +52,12 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  handleEventClick: function (eventObj) {
+  handleEventClick (eventObj) {
       dispatch(actions.focusEventView(eventObj.id));
-    }
+  },
+  focusEventForm () {
+    dispatch(actions.focusEventForm())
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

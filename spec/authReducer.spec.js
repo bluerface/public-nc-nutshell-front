@@ -134,7 +134,6 @@ describe('auth reducer:', function () {
       var user = {username: 'bob', name: 'Bob', password: 'pass123'};
       nock('http://localhost:3000')
         .post('/signin', user)
-        // .reply(401, {})
         .replyWithError('Error: Request failed with status code 401')
 
       const expectedActions = [

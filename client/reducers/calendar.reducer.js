@@ -3,21 +3,34 @@ import * as types from '../types/calendar.types.js';
 
 const initialState = {
   events: indexEventsById(eventsList),
-  focusedEvent: null
+  focusedEvent: null,
+  focusEventForm: false
 };
 
 export default function calendarReducer (state = initialState, action) {
   let newState = Object.assign({}, state);
+
   switch (action.type) {
     case types.FOCUS_EVENT_VIEW:
       newState.focusedEvent = action.eventId;
       break;
+
     case types.DEFOCUS_EVENT_VIEW:
       newState.focusedEvent = null;
       break;
+
+    case types.FOCUS_EVENT_FORM:
+      newState.focusEventForm = true;
+      break;
+
+    case types.DEFOCUS_EVENT_FORM:
+      newState.focusEventForm = false;
+      break;
+
     default:
       return state;
   }
+
   return newState;
 }
 

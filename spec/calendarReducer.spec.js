@@ -15,6 +15,7 @@ describe('calendar reducer:', function () {
       expect(indexEventsById(events)).to.eql(result);
     });
   });
+
   describe('getEventArray selector', function () {
     it('to return an array of the events', function () {
       let events = {
@@ -46,10 +47,32 @@ describe('calendar reducer:', function () {
       expect(actions.defocusEventView(123)).to.eql({type: types.DEFOCUS_EVENT_VIEW});
     });
     it('should set the focusedEvent property to null', function () {
-      const state  = calendarReducer(undefined, actions.focusEventView(123));
+      let state = calendarReducer(undefined, {});
+      state  = calendarReducer(state, actions.focusEventView(123));
       deepFreeze(state);
+
       let newState = calendarReducer(state, actions.defocusEventView());
       expect(newState.focusedEvent).to.be.null;
+    });
+  });
+
+  describe('FOCUS_EVENT_FORM', function () {
+    it('should set the focusEventForm property to true', function () {
+      let state = calendarReducer(undefined, {});
+      deepFreeze(state);
+      let newState = calendarReducer(state, actions.focusEventForm());
+      expect(newState.focusEventForm).to.be.true;
+    });
+  });
+
+  describe('DEFOCUS_EVENT_FORM', function () {
+    it('should set the focusEventForm property to false', function () {
+      let state = calendarReducer(undefined, {});
+      state  = calendarReducer(state, actions.focusEventForm());
+      deepFreeze(state);
+
+      let newState = calendarReducer(state, actions.defocusEventForm());
+      expect(newState.focusEventForm).to.be.false;
     });
   });
 });
