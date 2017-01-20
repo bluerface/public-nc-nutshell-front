@@ -4,41 +4,58 @@ import calendarReducer, {getEventArray, indexEventsById} from '../client/reducer
 import * as actions from '../client/actions/calendar.actions.js';
 import * as types from '../client/types/calendar.types.js';
 
-describe('indexEventsById', function () {
-  let events = [{id: 123, title: 'test1'}, {id: 456, title: 'test2'}]
-  it('to be a function', function () {
-    expect(indexEventsById).to.be.a('function');
+describe('calendar reducer:', function () {
+  describe('indexEventsById selector', function () {
+    it('to return an object containing the original events indexed by id', function () {
+      let events = [{id: 123, title: 'test1'}, {id: 456, title: 'test2'}]
+      let result = {
+        123 : events[0],
+        456: events[1]
+      }
+      expect(indexEventsById(events)).to.eql(result);
+    });
   });
-  it('to return an object', function () {
-    expect(indexEventsById(events)).to.be.an('object');
-  });
-  it('to contain the original events indexed by id', function () {
-    let result = {
-      123 : events[0],
-      456: events[1]
-    }
-    expect(indexEventsById(events)).to.eql(result);
-  });
-});
 
-describe('getEventArray', function () {
-  let events = {
-    123: {id: 123, title: 'test1'},
-    456: {id: 456, title: 'test2'}
-  }
-  let state = {
-    events
-  }
-  it('is a function', function () {
-    expect(getEventArray).to.be.a('function');
+  describe('getEventArray selector', function () {
+    it('to return an array of the events', function () {
+      let events = {
+        123: {id: 123, title: 'test1'},
+        456: {id: 456, title: 'test2'}
+      }
+      let state = {
+        events
+      }
+      let result = [events[123], events[456]];
+      expect(getEventArray(state)).to.eql(result);
+    });
   });
-  it('to return an array', function () {
-    expect(getEventArray(state)).to.be.an('array');
+
+  describe('FOCUS_EVENT_VIEW', function () {
+    it('action creator should return the correct action', function () {
+      expect(actions.focusEventView(123)).to.eql({type: types.FOCUS_EVENT_VIEW, eventId: 123});
+    });
+    it('should set the focusedEvent property to the given eventId', function () {
+      let state = calendarReducer(undefined, {});
+      deepFreeze(state);
+      let newState = calendarReducer(state, actions.focusEventView(123));
+      expect(newState.focusedEvent).to.equal(123);
+    });
   });
-  it('to return an array of the events', function () {
-    let result = [events[123], events[456]];
-    expect(getEventArray(state)).to.eql(result);
+
+  describe('DEFOCUS_EVENT_VIEW', function () {
+    it('action creator should return the correct action', function () {
+      expect(actions.defocusEventView(123)).to.eql({type: types.DEFOCUS_EVENT_VIEW});
+    });
+    it('should set the focusedEvent property to null', function () {
+      let state = calendarReducer(undefined, {});
+      state  = calendarReducer(state, actions.focusEventView(123));
+      deepFreeze(state);
+
+      let newState = calendarReducer(state, actions.defocusEventView());
+      expect(newState.focusedEvent).to.be.null;
+    });
   });
+
 });
 
 describe('actions:', function () {
