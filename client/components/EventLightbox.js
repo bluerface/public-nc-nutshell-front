@@ -1,46 +1,53 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import Dialog from 'material-ui/Dialog';
-import * as actions from '../actions/calendar.actions.js';
 import LectureDetails from './LectureDetails';
 import SprintDetails from './SprintDetails';
 
-function EventLightbox (props) {
-  let contents;
-  if(props.eventObj.type === 'lecture'){
-    contents = <LectureDetails eventObj={props.eventObj} />
-  } else if (props.eventObj.type === 'sprint') {
-    contents = <SprintDetails eventObj={props.eventObj} />
+class EventLightbox extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      fetching: false
+    }
+  }
+  render () {
+    var props = this.props;
+    var contents;
+    var type = props.eventObj.event_type;
+    if(type === 'lecture' || type === 'social'){
+      contents = <LectureDetails eventObj={props.eventObj} />
+    } else if (type === 'sprint' || type === 'kata' || type === 'weekend review') {
+      contents = <SprintDetails eventObj={props.eventObj} />
+    }
+
+    return(
+      <Dialog
+        modal={false}
+        open={!!props.focusedEvent}
+        onRequestClose={props.defocusEventView}
+        >
+        {contents}
+      </Dialog>
+    );
   }
 
-  return(
-    <Dialog
-      modal={false}
-      open={!!props.focusedEvent}
-      onRequestClose={props.onRequestClose}
-    >
-      {contents}
-    </Dialog>
-  );
+  componentWillReceiveProps ({eventObj, fetchEventDetail}) {
+    if(!this.state.fetching && eventObj._id && !eventObj.isFull) {
+      this.setState({fetching: true}, () => {
+        fetchEventDetail(eventObj._id)
+          .then(() => {
+            this.setState({fetching: false});
+          })
+      })
+    }
+  }
 }
 
 EventLightbox.propTypes = {
   focusedEvent: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.null ]),
-  onRequestClose: React.PropTypes.func,
-  eventObj: React.PropTypes.object.isRequired
+  eventObj: React.PropTypes.object.isRequired,
+  defocusEventView: React.PropTypes.func.isRequired,
+  fetchEventDetail: React.PropTypes.func.isRequired
 }
 
-EventLightbox.defaultProps = {
-  eventObj: {}
-}
-
-const mapStateToProps = (state) => ({
-  focusedEvent: state.calendar.focusedEvent,
-  eventObj: state.calendar.events[state.calendar.focusedEvent]
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  onRequestClose: () => { dispatch(actions.defocusEventView()) }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventLightbox);
+export default EventLightbox;

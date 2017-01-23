@@ -6,19 +6,19 @@ var resources = [
     id: 1,
     type: 'link',
     url: 'https://medium.freecodecamp.com/react-props-state-explained-through-darth-vaders-hunt-for-the-rebels-8ee486576492#.714dve36m',
-    tags: ['react', 'core_reading'],
+    tags: [{slug: 'react'}, {slug: 'core_reading'}],
   },
   {
     id: 2,
     type: 'link',
     url: 'http://visionmedia.github.io/superagent/',
-    tags: ['reference']
+    tags: [{slug: 'reference'}]
   },
   {
     id: 3,
     type: 'link',
     url: 'http://redux.js.org/',
-    tags: ['redux', 'react_ecosystem', 'core_reading', 'reference']
+    tags: [{slug: 'redux'}, {slug: 'react_ecosystem'}, {slug: 'core_reading'}, {slug: 'reference'}]
   }
 ]
 
@@ -30,18 +30,8 @@ describe('filterResources utility function', function () {
     var filter = ['react', 'redux'];
 
     var expected = [
-      {
-        id: 1,
-        type: 'link',
-        url: 'https://medium.freecodecamp.com/react-props-state-explained-through-darth-vaders-hunt-for-the-rebels-8ee486576492#.714dve36m',
-        tags: ['react', 'core_reading'],
-      },
-      {
-        id: 3,
-        type: 'link',
-        url: 'http://redux.js.org/',
-        tags: ['redux', 'react_ecosystem', 'core_reading', 'reference']
-      }
+      resources[0],
+      resources[2]
     ]
 
     expect(filterResources(resources, filter)).to.eql(expected);

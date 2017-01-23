@@ -6,11 +6,11 @@ function SprintDetails ({eventObj}) {
     <div>
       <h1>{eventObj.title}</h1>
       <h5>
-        {moment(eventObj.startDate).format('D MMM')}
+        {moment(eventObj.start_date).format('D MMM')}
         {' - '}
-        {moment(eventObj.endDate).format('D MMM')}
+        {moment(eventObj.end_date).format('D MMM')}
       </h5>
-      <p>I am a sprint</p>
+      <p>I am a {eventObj.event_type}</p>
     </div>
   );
 }

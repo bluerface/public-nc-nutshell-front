@@ -1,14 +1,16 @@
-import eventsList from '../data/eventsList';
 import * as types from '../types/calendar.types.js';
 
 const initialState = {
-  events: indexEventsById(eventsList),
   focusedEvent: null,
-  focusEventForm: false
+  eventFormFocused: false
 };
 
 export default function calendarReducer (state = initialState, action) {
-  let newState = Object.assign({}, state);
+  let newState = Object.assign(
+    {},
+    state
+    // {events: eventsReducer(state.events, action)}
+  );
 
   switch (action.type) {
     case types.FOCUS_EVENT_VIEW:
@@ -20,11 +22,11 @@ export default function calendarReducer (state = initialState, action) {
       break;
 
     case types.FOCUS_EVENT_FORM:
-      newState.focusEventForm = true;
+      newState.eventFormFocused = true;
       break;
 
     case types.DEFOCUS_EVENT_FORM:
-      newState.focusEventForm = false;
+      newState.eventFormFocused = false;
       break;
 
     default:
@@ -32,18 +34,4 @@ export default function calendarReducer (state = initialState, action) {
   }
 
   return newState;
-}
-
-export function indexEventsById (eventsArr) {
-  return eventsArr.reduce((acc, ele) => {
-    acc[ele.id] = ele;
-    return acc;
-  }, {});
-}
-
-export function getEventArray (state) {
-  let events = state.events;
-  return Object.keys(events).reduce((acc, key) => {
-    return acc.concat([events[key]]);
-  }, [])
 }

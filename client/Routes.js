@@ -1,9 +1,9 @@
 import React from 'react';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 
-import requireAuth from './components/requireAuth';
+import requireAuth from './componentsHO/requireAuth';
 import App from './components/App';
-import CalendarView from './components/CalendarView';
+import CalendarView from './containers/CalendarView';
 import SigninView from './components/SigninView';
 import ResourceView from './containers/ResourceView';
 

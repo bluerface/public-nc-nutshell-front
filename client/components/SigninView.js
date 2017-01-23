@@ -1,7 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from 'react-redux';
-import actions from '../actions/auth.actions.js';
+import actions from '../actions';
 import config from '../../config';
 
 const SigninView = function (props) {

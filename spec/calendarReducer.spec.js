@@ -1,35 +1,10 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
-import calendarReducer, {getEventArray, indexEventsById} from '../client/reducers/calendar.reducer.js';
-import * as actions from '../client/actions/calendar.actions.js';
+import calendarReducer from '../client/reducers/calendar.reducer.js';
+import actions from '../client/actions/calendar.actions.js';
 import * as types from '../client/types/calendar.types.js';
 
 describe('calendar reducer:', function () {
-  describe('indexEventsById selector', function () {
-    it('to return an object containing the original events indexed by id', function () {
-      let events = [{id: 123, title: 'test1'}, {id: 456, title: 'test2'}]
-      let result = {
-        123 : events[0],
-        456: events[1]
-      }
-      expect(indexEventsById(events)).to.eql(result);
-    });
-  });
-
-  describe('getEventArray selector', function () {
-    it('to return an array of the events', function () {
-      let events = {
-        123: {id: 123, title: 'test1'},
-        456: {id: 456, title: 'test2'}
-      }
-      let state = {
-        events
-      }
-      let result = [events[123], events[456]];
-      expect(getEventArray(state)).to.eql(result);
-    });
-  });
-
   describe('FOCUS_EVENT_VIEW', function () {
     it('action creator should return the correct action', function () {
       expect(actions.focusEventView(123)).to.eql({type: types.FOCUS_EVENT_VIEW, eventId: 123});
@@ -57,22 +32,22 @@ describe('calendar reducer:', function () {
   });
 
   describe('FOCUS_EVENT_FORM', function () {
-    it('should set the focusEventForm property to true', function () {
+    it('should set the eventFormFocused property to true', function () {
       let state = calendarReducer(undefined, {});
       deepFreeze(state);
       let newState = calendarReducer(state, actions.focusEventForm());
-      expect(newState.focusEventForm).to.be.true;
+      expect(newState.eventFormFocused).to.be.true;
     });
   });
 
   describe('DEFOCUS_EVENT_FORM', function () {
-    it('should set the focusEventForm property to false', function () {
+    it('should set the eventFormFocused property to false', function () {
       let state = calendarReducer(undefined, {});
       state  = calendarReducer(state, actions.focusEventForm());
       deepFreeze(state);
 
       let newState = calendarReducer(state, actions.defocusEventForm());
-      expect(newState.focusEventForm).to.be.false;
+      expect(newState.eventFormFocused).to.be.false;
     });
   });
 });

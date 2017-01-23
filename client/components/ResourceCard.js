@@ -13,8 +13,8 @@ function ResourceCard ({resource}) {
       <CardTitle title="Article Name" subtitle={<a href={resource.url}> {resource.url} </a>} />
       <CardText style={chipContainer}>
           {
-            resource.tags.map((tag, i) => (
-              <Chip key={i} style={{marginRight: 6}}>{tag}</Chip>
+            resource.tags.map((tag) => (
+              <Chip key={tag._id} style={{marginRight: 6}}>{tag.slug}</Chip>
             ))
           }
     </CardText>

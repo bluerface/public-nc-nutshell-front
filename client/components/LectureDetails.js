@@ -6,9 +6,12 @@ function LectureDetails ({eventObj}) {
     <div>
       <h1>{eventObj.title}</h1>
       <h5>
-        {moment(eventObj.startDate).format('h:mm')}
+        {moment(eventObj.start_date).format('h:mm')}
         {' - '}
-        {moment(eventObj.endDate).format('h:mm')}
+        {moment(eventObj.end_date).format('h:mm')}
+      </h5>
+      <h5>
+        {eventObj.lecturer}
       </h5>
       <p>{eventObj.description}</p>
     </div>

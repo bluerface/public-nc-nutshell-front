@@ -11,7 +11,7 @@ var dividerStyle = {
 function ResourceFilter ({tags, onCheck}) {
   const createListItem = (tag) => (
     <ListItem
-      key={tag.id}
+      key={tag._id}
       leftCheckbox={
         <Checkbox onCheck={onCheck.bind(this, tag)}/>
       }
@@ -19,11 +19,11 @@ function ResourceFilter ({tags, onCheck}) {
     />
   )
   var typeFilters = tags
-    .filter((tag) => tag.category === 'type')
+    .filter((tag) => tag.category.toLowerCase() === 'type')
     .map(createListItem);
 
   var topicFilters = tags
-    .filter((tag) => tag.category === 'topic')
+    .filter((tag) => tag.category.toLowerCase() === 'topic')
     .sort((a, b) => a.slug > b.slug)
     .map(createListItem);
 

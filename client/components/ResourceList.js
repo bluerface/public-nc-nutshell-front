@@ -10,7 +10,7 @@ function ResourceList ({topicFilters, typeFilters, resources}) {
     <div>
       {
         resources.map((resource) => (
-          <ResourceCard key={resource.id} resource={resource} />
+          <ResourceCard key={resource._id} resource={resource} />
         ))
       }
     </div>

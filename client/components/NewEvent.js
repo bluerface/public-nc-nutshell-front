@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import * as actions from '../actions/calendar.actions.js'
 import moment from 'moment';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -29,13 +27,15 @@ class NewEvent extends Component {
 
     this.state = Object.assign({}, this.initialState);
 
-    this.handleOpen = this.props.handleOpen;
-    this.handleClose = this.props.handleClose;
+    this.handleClose = this.handleClose.bind(this);
     this.handleDropdown = this.handleDropdown.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
+  handleClose () {
+    this.props.defocusEventForm();
+    this.setState(this.initialState);
+  }
 
   handleTextField (key, e) {
     this.setState({[key]: e.target.value})
@@ -54,7 +54,6 @@ class NewEvent extends Component {
   }
 
   render () {
-    console.log(this.state);
     const actions = [
       <FlatButton
         label="Cancel"
@@ -76,7 +75,7 @@ class NewEvent extends Component {
           title="Create a new Event"
           actions={actions}
           modal={true}
-          open={this.props.open}
+          open={this.props.eventFormFocused}
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
@@ -133,22 +132,10 @@ class NewEvent extends Component {
 }
 
 NewEvent.propTypes = {
-  open: React.PropTypes.bool.isRequired,
-  handleOpen: React.PropTypes.func.isRequired,
-  handleClose: React.PropTypes.func.isRequired
+  eventFormFocused: React.PropTypes.bool.isRequired,
+  defocusEventForm: React.PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  open: state.calendar.focusEventForm
-})
 
-const mapDispatchToProps = (dispatch) => ({
-  handleOpen () {
-    dispatch(actions.focusEventForm())
-  },
-  handleClose () {
-    dispatch(actions.defocusEventForm())
-  }
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewEvent);
+export default NewEvent;
