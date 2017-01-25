@@ -1,6 +1,7 @@
 import React from 'react';
 import EventTitle from './EventTitle';
 import ResourceSmall from './ResourceSmall';
+import Markdown from './Markdown';
 
 function SprintDetails ({eventObj}) {
   var repo = {
@@ -25,11 +26,11 @@ function SprintDetails ({eventObj}) {
         </div>
       </div>
       <div className='box'>
-        <div className='box padding'>
-          README.md goes here
+        <div className='box' style={{padding: '20px'}}>
+          README.md
         </div>
-        <div className='padding'>
-          readmereadmereadme
+        <div style={{padding: '30px'}}>
+          <Markdown />
         </div>
       </div>
     </div>

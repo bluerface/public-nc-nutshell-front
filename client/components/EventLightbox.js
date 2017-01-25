@@ -26,6 +26,7 @@ class EventLightbox extends React.Component {
         open={!!props.focusedEvent}
         onRequestClose={props.defocusEventView}
         contentStyle={{width: '90%', maxWidth: '1000px'}}
+        autoScrollBodyContent
       >
         {contents}
       </Dialog>
