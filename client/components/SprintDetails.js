@@ -12,7 +12,9 @@ function SprintDetails ({eventObj}) {
   return (
     <div>
       <EventTitle eventObj={eventObj} />
+
       <div style={{display: 'flex', marginBottom: '30px'}}>
+
         <div style={{width: '50%'}}>
           <h5 className='heading'>Repo</h5>
           {eventObj.repo && <ResourceSmall resource={repo} />}
