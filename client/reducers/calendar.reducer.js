@@ -6,6 +6,10 @@ const initialState = {
     focused: false,
     loading: false,
     error: null
+  },
+  eventResourceForm: {
+    loading: false,
+    error: null
   }
 };
 
@@ -51,6 +55,23 @@ export default function calendarReducer (state = initialState, action) {
       newState.eventForm = Object.assign({}, state.eventForm);
       newState.eventForm.loading = false;
       newState.eventForm.error = action.error;
+      break;
+
+    case types.ADD_EVENT_RESOURCE_REQUEST:
+      newState.eventResourceForm = Object.assign({}, state.eventResourceForm);
+      newState.eventResourceForm.loading = true;
+      newState.eventResourceForm.error = null;
+      break;
+
+    case types.ADD_EVENT_RESOURCE_SUCCESS:
+      newState.eventResourceForm = Object.assign({}, state.eventResourceForm);
+      newState.eventResourceForm.loading = false;
+      break;
+
+    case types.ADD_EVENT_RESOURCE_ERROR:
+      newState.eventResourceForm = Object.assign({}, state.eventResourceForm);
+      newState.eventResourceForm.loading = false;
+      newState.eventResourceForm.error = action.error;
       break;
 
     default:

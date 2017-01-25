@@ -53,6 +53,16 @@ export default function eventsReducer (state = initialState, action) {
       break;
     }
 
+    case types.ADD_EVENT_RESOURCE_SUCCESS:
+    {
+      let id = action.eventId;
+      let resource = action.payload.resource;
+      newState.byId = Object.assign({}, state.byId);
+      newState.byId[id] = Object.assign({}, state.byId[id]);
+      newState.byId[id].resources = state.byId[id].resources.concat([resource]);
+      break;
+    }
+
     default:
       return state;
   }

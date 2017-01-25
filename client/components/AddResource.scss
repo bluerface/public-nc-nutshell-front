@@ -1,0 +1,17 @@
+.add-resource {
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px dashed #BDBDBD;
+  padding: 5px;
+  a {
+    color: inherit;
+    padding-left: 5%;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  div {
+    margin: 20px;
+  }
+}

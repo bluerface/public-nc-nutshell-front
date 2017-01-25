@@ -1,6 +1,7 @@
 import {expect} from 'chai';
 import eventsReducer, {indexEventsById, getEventArray} from '../client/reducers/events.reducer.js';
 import calendarReducer from '../client/reducers/calendar.reducer.js';
+import resourcesReducer from '../client/reducers/resources.reducer.js';
 import deepFreeze from 'deep-freeze';
 import actions from '../client/actions';
 
@@ -177,6 +178,63 @@ describe('events reducer:', function () {
       var newState = calendarReducer(state, actions.postEventError('I am an error'));
       expect(newState.eventForm.loading).to.be.false;
       expect(newState.eventForm.error).to.equal('I am an error');
+    });
+  });
+
+  describe('ADD_EVENT_RESOURCE_REQUEST', function () {
+    it('should set loading to true and reset any errors (calendar reducer)', function () {
+      let state = {eventResourceForm: {loading: false, error: 'ajfdkafjal'}};
+      deepFreeze(state);
+      let newState = calendarReducer(state, actions.addEventResourceRequest());
+      expect(newState.eventResourceForm.loading).to.be.true;
+      expect(newState.eventResourceForm.error).to.be.null;
+    });
+  });
+
+  describe('ADD_EVENT_RESOURCE_SUCCESS', function () {
+    it('should set loading to false (calendar reducer)', function () {
+      let state = calendarReducer(undefined, actions.addEventResourceRequest());
+      deepFreeze(state);
+      let newState = calendarReducer(state, actions.addEventResourceSuccess());
+      expect(newState.eventResourceForm.loading).to.be.false;
+    });
+
+    it('should add the resource to the event', function () {
+      let state = {
+        byId: {
+          123: {
+            _id: 123,
+            start_date: "2017-01-26T10:30:00.000Z",
+            title: 'test1',
+            resources: [
+              {}
+            ]
+          }
+        }
+      }
+      deepFreeze(state);
+      var payload = {event: {}, resource: {_id: 987, title: 'I am a title'}};
+      var newState = eventsReducer(state, actions.addEventResourceSuccess(123, payload));
+      expect(newState.byId[123].resources.length).to.equal(2);
+      expect(newState.byId[123].resources).to.include(payload.resource);
+    });
+
+    it('should add the resource to resources (resource reducer)', function () {
+      let state = resourcesReducer(undefined, {});
+      deepFreeze(state);
+      var payload = {event: {}, resource: {_id: 987, title: 'I am a title'}};
+      let newState = resourcesReducer(state, actions.addEventResourceSuccess(123, payload));
+      expect(newState.byId[987]).to.equal(payload.resource);
+    });
+  });
+
+  describe('ADD_EVENT_RESOURCE_ERROR', function () {
+    it('should set loading to false and set the error (calendar reducer)', function () {
+      let state = calendarReducer(undefined, actions.addEventResourceRequest());
+      deepFreeze(state);
+      let newState = calendarReducer(state, actions.addEventResourceError('I am an error'));
+      expect(newState.eventResourceForm.loading).to.be.false;
+      expect(newState.eventResourceForm.error).to.equal('I am an error');
     });
   });
 });

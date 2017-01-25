@@ -25,6 +25,14 @@ export default function (state = initialState, action) {
       newState.error = action.error;
       break;
 
+    case types.ADD_EVENT_RESOURCE_SUCCESS:
+    {
+      let resource = action.payload.resource;
+      newState.byId = Object.assign({}, state.byId);
+      newState.byId[resource._id] = resource;
+      break;
+    }
+
     default:
       return state
   }

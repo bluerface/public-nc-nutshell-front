@@ -1,6 +1,7 @@
 import React from 'react';
 import EventTitle from './EventTitle';
 import ResourceSmall from './ResourceSmall';
+import AddResource from './AddResource';
 
 function LectureDetails ({eventObj}) {
   return (
@@ -18,6 +19,7 @@ function LectureDetails ({eventObj}) {
               <ResourceSmall key={resource._id} resource={resource} />
             ))
           }
+          <AddResource />
         </div>
       </div>
     </div>

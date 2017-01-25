@@ -1,6 +1,7 @@
 import React from 'react';
 import EventTitle from './EventTitle';
 import ResourceSmall from './ResourceSmall';
+import AddResource from './AddResource';
 import Markdown from './Markdown';
 
 function SprintDetails ({eventObj}) {
@@ -16,6 +17,7 @@ function SprintDetails ({eventObj}) {
           <h5 className='heading'>Repo</h5>
           {eventObj.repo && <ResourceSmall resource={repo} />}
         </div>
+
         <div style={{width: '50%'}} className='trunkate'>
           <h5 className='heading'>Resources</h5>
           {
@@ -23,8 +25,10 @@ function SprintDetails ({eventObj}) {
               <ResourceSmall key={resource._id} resource={resource} />
             ))
           }
+          <AddResource />
         </div>
       </div>
+
       <div className='box'>
         <div className='box' style={{padding: '20px'}}>
           README.md

@@ -82,4 +82,29 @@ actions.postEventSuccess = (event) =>
 actions.postEventError = (error) =>
   ({type: types.POST_EVENT_ERROR, error})
 
+// ---------------- add event resource
+
+actions.addEventResource = (eventId, body) => {
+  return (dispatch) => {
+    dispatch(actions.addEventResourceRequest());
+    return axios
+      .post(config.SERVER + `/api/events/${eventId}/resources`, body)
+      .then(res => {
+        dispatch(actions.addEventResourceSuccess(eventId, res.data))
+      })
+      .catch(err => {
+        dispatch(actions.addEventResourceError(err))
+      })
+  }
+}
+
+actions.addEventResourceRequest = () =>
+  ({type: types.ADD_EVENT_RESOURCE_REQUEST});
+
+actions.addEventResourceSuccess = (eventId, payload) =>
+  ({type: types.ADD_EVENT_RESOURCE_SUCCESS, eventId, payload})
+
+actions.addEventResourceError = (error) =>
+  ({type: types.ADD_EVENT_RESOURCE_ERROR, error})
+
 export default actions;
