@@ -1,16 +1,37 @@
 import React from 'react';
-import moment from 'moment';
+import EventTitle from './EventTitle';
+import ResourceSmall from './ResourceSmall';
 
 function SprintDetails ({eventObj}) {
+  var repo = {
+    type: 'link',
+    url: eventObj.repo
+  }
   return (
     <div>
-      <h1>{eventObj.title}</h1>
-      <h5>
-        {moment(eventObj.start_date).format('D MMM')}
-        {' - '}
-        {moment(eventObj.end_date).format('D MMM')}
-      </h5>
-      <p>I am a {eventObj.event_type}</p>
+      <EventTitle eventObj={eventObj} />
+      <div style={{display: 'flex', marginBottom: '30px'}}>
+        <div style={{width: '50%'}}>
+          <h5 className='heading'>Repo</h5>
+          {eventObj.repo && <ResourceSmall resource={repo} />}
+        </div>
+        <div style={{width: '50%'}} className='trunkate'>
+          <h5 className='heading'>Resources</h5>
+          {
+            eventObj.resources && eventObj.resources.map((resource) => (
+              <ResourceSmall key={resource._id} resource={resource} />
+            ))
+          }
+        </div>
+      </div>
+      <div className='box'>
+        <div className='box padding'>
+          README.md goes here
+        </div>
+        <div className='padding'>
+          readmereadmereadme
+        </div>
+      </div>
     </div>
   );
 }

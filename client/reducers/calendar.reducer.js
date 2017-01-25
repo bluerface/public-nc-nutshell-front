@@ -10,7 +10,10 @@ const initialState = {
 };
 
 export default function calendarReducer (state = initialState, action) {
-  let newState = Object.assign({}, state);
+  let newState = Object.assign(
+    {},
+    state
+  );
 
   switch (action.type) {
     case types.FOCUS_EVENT_VIEW:

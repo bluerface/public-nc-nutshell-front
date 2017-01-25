@@ -30,7 +30,7 @@ function ResourceCard ({resource}) {
   return (
     <Paper>
       <Card containerStyle={{marginBottom: '20px'}}>
-        {(title || url) && <CardTitle title={title} subtitle={<a href={url}> {url} </a>} />}
+        {(title || url) && <CardTitle title={title} subtitle={<a href={url} target='_blank'> {url} </a>} />}
         {text &&
           <CardText>
             <div style={{marginBottom: '5px', fontFamily: 'monospace'}}>

@@ -8,7 +8,7 @@ import NavCenter from './NavCenter';
 
 const NavBar = function () {
   return (
-    <Paper zDepth={2} className='fixed' style={{zIndex: '2000'}}>
+    <Paper zDepth={2} className='fixed' style={{zIndex: '1300'}}>
       <Toolbar>
         <NavLeft />
         <NavCenter />
