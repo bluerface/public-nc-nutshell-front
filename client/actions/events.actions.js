@@ -57,4 +57,29 @@ actions.fetchEventDetailError = (error) =>
   ({type: types.FETCH_EVENT_DETAIL_ERROR, error})
 
 
+// -------------- post event
+
+actions.postEvent = (event) => {
+  return (dispatch) => {
+    dispatch(actions.postEventRequest());
+    return axios
+      .post(config.SERVER + '/api/events', event)
+      .then(res => {
+        dispatch(actions.postEventSuccess(res.data.event))
+      })
+      .catch(err => {
+        dispatch(actions.postEventError(err))
+      })
+  }
+}
+
+actions.postEventRequest = () =>
+  ({type: types.POST_EVENT_REQUEST})
+
+actions.postEventSuccess = (event) =>
+  ({type: types.POST_EVENT_SUCCESS, event})
+
+actions.postEventError = (error) =>
+  ({type: types.POST_EVENT_ERROR, error})
+
 export default actions;

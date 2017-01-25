@@ -36,7 +36,7 @@ describe('calendar reducer:', function () {
       let state = calendarReducer(undefined, {});
       deepFreeze(state);
       let newState = calendarReducer(state, actions.focusEventForm());
-      expect(newState.eventFormFocused).to.be.true;
+      expect(newState.eventForm.focused).to.be.true;
     });
   });
 
@@ -47,7 +47,7 @@ describe('calendar reducer:', function () {
       deepFreeze(state);
 
       let newState = calendarReducer(state, actions.defocusEventForm());
-      expect(newState.eventFormFocused).to.be.false;
+      expect(newState.eventForm.focused).to.be.false;
     });
   });
 });

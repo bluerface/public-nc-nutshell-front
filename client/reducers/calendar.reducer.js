@@ -1,16 +1,16 @@
-import * as types from '../types/calendar.types.js';
+import types from '../types';
 
 const initialState = {
   focusedEvent: null,
-  eventFormFocused: false
+  eventForm: {
+    focused: false,
+    loading: false,
+    error: null
+  }
 };
 
 export default function calendarReducer (state = initialState, action) {
-  let newState = Object.assign(
-    {},
-    state
-    // {events: eventsReducer(state.events, action)}
-  );
+  let newState = Object.assign({}, state);
 
   switch (action.type) {
     case types.FOCUS_EVENT_VIEW:
@@ -22,11 +22,32 @@ export default function calendarReducer (state = initialState, action) {
       break;
 
     case types.FOCUS_EVENT_FORM:
-      newState.eventFormFocused = true;
+      newState.eventForm = Object.assign({}, state.eventForm);
+      newState.eventForm.focused = true;
       break;
 
     case types.DEFOCUS_EVENT_FORM:
-      newState.eventFormFocused = false;
+      newState.eventForm = Object.assign({}, state.eventForm);
+      newState.eventForm.focused = false;
+      break;
+
+    case types.POST_EVENT_REQUEST:
+      newState.eventForm = Object.assign({}, state.eventForm);
+      newState.eventForm.error = null;
+      newState.eventForm.loading = true;
+      break;
+
+    case types.POST_EVENT_SUCCESS:
+      newState.eventForm = Object.assign({}, state.eventForm);
+      newState.eventForm.loading = false;
+      newState.eventForm.focused = false;
+      newState.focusedEvent = action.event._id;
+      break;
+
+    case types.POST_EVENT_ERROR:
+      newState.eventForm = Object.assign({}, state.eventForm);
+      newState.eventForm.loading = false;
+      newState.eventForm.error = action.error;
       break;
 
     default:

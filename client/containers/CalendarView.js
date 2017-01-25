@@ -30,6 +30,7 @@ class CalendarView extends React.Component {
         <NewEvent
           defocusEventForm={props.defocusEventForm}
           eventFormFocused={props.eventFormFocused}
+          postEvent={props.postEvent}
         />
       </div>
     )
@@ -43,6 +44,7 @@ CalendarView.propTypes = {
   defocusEventView: React.PropTypes.func.isRequired,
   fetchEvents: React.PropTypes.func.isRequired,
   fetchEventDetail: React.PropTypes.func.isRequired,
+  postEvent: React.PropTypes.func.isRequired,
 
   events: React.PropTypes.array,
   focusedEvent: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.null ]),
@@ -58,7 +60,7 @@ const mapStateToProps = (state) => ({
   events: getEventArray(state),
   focusedEvent: state.calendar.focusedEvent,
   eventObj: getEventById(state, state.calendar.focusedEvent),
-  eventFormFocused: state.calendar.eventFormFocused
+  eventFormFocused: state.calendar.eventForm.focused
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -79,6 +81,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchEventDetail (id, cb) {
     return dispatch(actions.fetchEventDetail(id, cb))
+  },
+  postEvent (event) {
+    return dispatch(actions.postEvent(event));
   }
 })
 

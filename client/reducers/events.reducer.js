@@ -1,4 +1,3 @@
-import moment from 'moment';
 import * as types from '../types/events.types.js';
 
 var initialState = {
@@ -44,6 +43,16 @@ export default function eventsReducer (state = initialState, action) {
       newState.error = action.error;
       break;
 
+    case types.POST_EVENT_SUCCESS:
+    {
+      newState.byId = Object.assign({}, state.byId);
+      let event = action.event;
+      event.start_date = new Date(event.start_date);
+      event.end_date = new Date(event.end_date);
+      newState.byId[action.event._id] = action.event;
+      break;
+    }
+
     default:
       return state;
   }
@@ -53,8 +62,8 @@ export default function eventsReducer (state = initialState, action) {
 
 export function indexEventsById (eventsArr) {
   return eventsArr.reduce((acc, ele) => {
-    ele.start_date = moment(ele.start_date).toDate();
-    ele.end_date = moment(ele.end_date).toDate();
+    ele.start_date = new Date(ele.start_date);
+    ele.end_date = new Date(ele.end_date);
     ele.isFull = false;
     acc[ele._id] = ele;
     return acc;

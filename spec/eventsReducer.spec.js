@@ -1,7 +1,8 @@
 import {expect} from 'chai';
 import eventsReducer, {indexEventsById, getEventArray} from '../client/reducers/events.reducer.js';
+import calendarReducer from '../client/reducers/calendar.reducer.js';
 import deepFreeze from 'deep-freeze';
-import actions from '../client/actions/events.actions.js';
+import actions from '../client/actions';
 
 let events = [
   {
@@ -120,6 +121,62 @@ describe('events reducer:', function () {
       var newState = eventsReducer(state, actions.fetchEventDetailError('Hello'))
       expect(newState.loading).to.be.false;
       expect(newState.error).to.equal('Hello');
+    });
+  });
+
+  describe('POST_EVENT_REQUEST', function () {
+    it('should add loading and remove any errors (from the calendar reducer)', function () {
+      var state = {eventForm: {loading: false, error: 'asdfasdfasdf'}};
+      deepFreeze(state);
+      var newState = calendarReducer(state, actions.postEventRequest());
+      expect(newState.eventForm.loading).to.be.true;
+      expect(newState.eventForm.error).to.be.null;
+    });
+  });
+
+  describe('POST_EVENT_SUCCESS', function () {
+    it('should reset the loading property (calendar reducer)', function () {
+      var state = calendarReducer(undefined, actions.postEventRequest());
+      deepFreeze(state);
+      var newState = calendarReducer(state, actions.postEventSuccess({_id: 123}));
+      expect(newState.eventForm.loading).to.be.false;
+    });
+    it('should add the new event to the events byId object', function () {
+      var state = eventsReducer(undefined, {});
+      deepFreeze(state);
+      var event = {
+        _id: 123,
+        title: 'hello'
+      }
+      var newState = eventsReducer(state, actions.postEventSuccess(event));
+      expect(newState.byId[123]).to.eql(event);
+    });
+    it('should defocus the form, and focus the new event (calendar reducer)', function () {
+      var state = {
+        focusedEvent: null,
+        eventForm: {
+          focused: true,
+          loading: true,
+          error: null
+        }
+      }
+
+      var event = {_id: 123}
+
+      deepFreeze(state);
+      var newState = calendarReducer(state, actions.postEventSuccess(event));
+      expect(newState.eventForm.focused).to.be.false;
+      expect(newState.focusedEvent).to.equal(123);
+    });
+  });
+
+  describe('POST_EVENT_ERROR', function () {
+    it('resets the loading property and sets the error (calendar reducer)', function () {
+      var state = calendarReducer(undefined, actions.postEventRequest());
+      deepFreeze(state);
+      var newState = calendarReducer(state, actions.postEventError('I am an error'));
+      expect(newState.eventForm.loading).to.be.false;
+      expect(newState.eventForm.error).to.equal('I am an error');
     });
   });
 });
