@@ -6,6 +6,7 @@ import * as types from '../client/types/auth.types.js';
 
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import config from '../config';
 import nock from 'nock';
 import * as router from 'react-router';
 
@@ -91,7 +92,7 @@ describe('auth reducer:', function () {
 
       var user = {username: 'bob', name: 'Bob', password: 'pass123'};
       const token = 'adfjhkljahfdkjfkhfalhdflasdfh'
-      nock('http://localhost:3000')
+      nock(config.SERVER)
         .post('/signin', user)
         .reply(200, { user, token })
 
@@ -115,7 +116,7 @@ describe('auth reducer:', function () {
 
       let user = {username: 'bob', name: 'Bob', password: 'pass123'};
       let token = 'adfjhkljahfdkjfkhfalhdflasdfh'
-      nock('http://localhost:3000')
+      nock(config.SERVER)
         .post('/signin', user)
         .reply(200, { user, token })
 
@@ -132,7 +133,7 @@ describe('auth reducer:', function () {
     });
     it('dispatches the SIGNIN_REQUEST and SIGNIN_ERROR actions for an unsuccessful request', () => {
       var user = {username: 'bob', name: 'Bob', password: 'pass123'};
-      nock('http://localhost:3000')
+      nock(config.SERVER)
         .post('/signin', user)
         .replyWithError('Error: Request failed with status code 401')
 
