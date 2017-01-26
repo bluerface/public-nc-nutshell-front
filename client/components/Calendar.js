@@ -19,9 +19,11 @@ var newEventButtonStyle = {
 function Calendar (props) {
   return (
     <div className='calendar-wrap' style={{position: 'relative'}}>
-      <FloatingActionButton secondary={true} onTouchTap={props.focusEventForm} style={newEventButtonStyle}>
-        <ContentAdd />
-      </FloatingActionButton>
+      {props.isStaff &&
+        <FloatingActionButton secondary={true} onTouchTap={props.focusEventForm} style={newEventButtonStyle}>
+          <ContentAdd />
+        </FloatingActionButton>
+      }
 
       <BigCalendar
         events={props.events}
@@ -65,6 +67,7 @@ function eventPropGetter (event) {
 
 Calendar.propTypes = {
   events: React.PropTypes.array,
+  isStaff: React.PropTypes.bool.isRequired,
   focusEventView: React.PropTypes.func.isRequired,
   focusEventForm: React.PropTypes.func.isRequired
 }

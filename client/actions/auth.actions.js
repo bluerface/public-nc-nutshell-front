@@ -5,11 +5,11 @@ import {browserHistory} from 'react-router';
 
 let actions = {};
 
-actions.signIn = (username, name, password) => {
+actions.signIn = (username, password) => {
   return (dispatch) => {
     dispatch(actions.signInRequest());
     return axios
-      .post(config.SERVER + '/signin', {username, name, password})
+      .post(config.SERVER + '/signin', {username, password})
       .then((res => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));

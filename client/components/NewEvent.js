@@ -16,7 +16,7 @@ class NewEvent extends Component {
       open: false,
       eventType: 'lecture',
       title: '',
-      lecturer: '',
+      lecturer: this.props.user,
       description: '',
       startDate: null,
       endDate: null,
@@ -77,6 +77,7 @@ class NewEvent extends Component {
 
     var event = {
       title: state.title,
+      lecturer: state.lecturer,
       event_type: state.eventType,
       start_date: startDate.toISOString(),
       end_date: endDate.toISOString()
@@ -84,9 +85,6 @@ class NewEvent extends Component {
 
     switch (state.eventType) {
       case 'lecture':
-        event.lecturer = state.lecturer;
-        event.description = state.description;
-        break;
       case 'social':
         event.description = state.description;
         break;
@@ -99,8 +97,6 @@ class NewEvent extends Component {
         event.repo = state.repo;
         break;
     }
-
-    console.log(event);
 
     this.props.postEvent(event)
       .then(() => {
@@ -221,7 +217,8 @@ class NewEvent extends Component {
 NewEvent.propTypes = {
   eventFormFocused: React.PropTypes.bool.isRequired,
   defocusEventForm: React.PropTypes.func.isRequired,
-  postEvent: React.PropTypes.func.isRequired
+  postEvent: React.PropTypes.func.isRequired,
+  user: React.PropTypes.string.isRequired
 }
 
 

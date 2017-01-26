@@ -7,20 +7,25 @@ import config from '../../config';
 const SigninView = function (props) {
   return (
       <div>
-        <RaisedButton label='Signin as teacher' disabled/> <br />
+        <RaisedButton label='Signin as staff' secondary onTouchTap={props.signinStaff}/> <br />
         <RaisedButton label='Signin as student' secondary  onTouchTap={props.signinStudent} />
       </div>
   )
 }
 
 SigninView.propTypes = {
-  signinStudent: React.PropTypes.func.isRequired
+  signinStudent: React.PropTypes.func.isRequired,
+  signinStaff: React.PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  signinStaff: () => {
+      let {username, password} = config.STAFF_LOGIN
+      dispatch(actions.signIn(username, password))
+  },
   signinStudent: () => {
-    let {username, name, password} = config.STUDENT_LOGIN
-    dispatch(actions.signIn(username, name, password))
+    let {username, password} = config.STUDENT_LOGIN
+    dispatch(actions.signIn(username, password))
   }
 })
 

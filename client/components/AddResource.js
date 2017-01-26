@@ -27,6 +27,9 @@ class AddResource extends React.Component {
     this.setState({type: null});
   }
   render () {
+    if (!this.props.isStaff) {
+      return null;
+    }
     return (
       <div className='add-resource' onBlur={this.onBlur}>
 
@@ -53,11 +56,13 @@ class AddResource extends React.Component {
 
 AddResource.propTypes = {
   focusedEvent: React.PropTypes.string.isRequired,
-  addEventResource: React.PropTypes.func.isRequired
+  addEventResource: React.PropTypes.func.isRequired,
+  isStaff: React.PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  focusedEvent: state.calendar.focusedEvent
+  focusedEvent: state.calendar.focusedEvent,
+  isStaff: state.auth.currentUser.role === 'staff'
 })
 
 const mapDispatchToProps = (dispatch) => ({

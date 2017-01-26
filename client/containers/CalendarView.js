@@ -24,6 +24,7 @@ class CalendarView extends React.Component {
         />
         <Calendar
           events={props.events}
+          isStaff={props.isStaff}
           focusEventView={props.focusEventView}
           focusEventForm={props.focusEventForm}
         />
@@ -31,6 +32,7 @@ class CalendarView extends React.Component {
           defocusEventForm={props.defocusEventForm}
           eventFormFocused={props.eventFormFocused}
           postEvent={props.postEvent}
+          user={props.user}
         />
       </div>
     )
@@ -50,6 +52,8 @@ CalendarView.propTypes = {
   focusedEvent: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.null ]),
   eventObj: React.PropTypes.object.isRequired,
   eventFormFocused: React.PropTypes.bool.isRequired,
+  isStaff: React.PropTypes.bool.isRequired,
+  user: React.PropTypes.string.isRequired
 }
 
 CalendarView.defaultProps = {
@@ -60,7 +64,9 @@ const mapStateToProps = (state) => ({
   events: getEventArray(state),
   focusedEvent: state.calendar.focusedEvent,
   eventObj: getEventById(state, state.calendar.focusedEvent),
-  eventFormFocused: state.calendar.eventForm.focused
+  eventFormFocused: state.calendar.eventForm.focused,
+  isStaff: state.auth.currentUser.role === 'staff',
+  user: state.auth.currentUser.name
 })
 
 const mapDispatchToProps = (dispatch) => ({

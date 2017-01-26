@@ -90,7 +90,7 @@ describe('auth reducer:', function () {
     it('dispatches the SIGNIN_REQUEST and SIGNIN_SUCCESS actions for a successful request', () => {
       router.browserHistory = {push: () => {}};
 
-      var user = {username: 'bob', name: 'Bob', password: 'pass123'};
+      var user = {username: 'bob', password: 'pass123'};
       const token = 'adfjhkljahfdkjfkhfalhdflasdfh'
       nock(config.SERVER)
         .post('/signin', user)
@@ -106,7 +106,7 @@ describe('auth reducer:', function () {
         signInError: null
       })
 
-      return store.dispatch(actions.signIn(user.username, user.name, user.password))
+      return store.dispatch(actions.signIn(user.username, user.password))
         .then(() => {
           expect(store.getActions()).to.eql(expectedActions);
         });
@@ -114,7 +114,7 @@ describe('auth reducer:', function () {
     it('adds the user and token to localStorage for a successful request', () => {
       router.browserHistory = {push: () => {}};
 
-      let user = {username: 'bob', name: 'Bob', password: 'pass123'};
+      let user = {username: 'bob', password: 'pass123'};
       let token = 'adfjhkljahfdkjfkhfalhdflasdfh'
       nock(config.SERVER)
         .post('/signin', user)
@@ -125,14 +125,14 @@ describe('auth reducer:', function () {
       expect(localStorage.getItem('user')).to.be.null;
       expect(localStorage.getItem('token')).to.be.null;
 
-      return store.dispatch(actions.signIn(user.username, user.name, user.password))
+      return store.dispatch(actions.signIn(user.username, user.password))
         .then(() => {
           expect(localStorage.getItem('user')).to.eql(JSON.stringify(user));
           expect(localStorage.getItem('token')).to.eql(token);
         })
     });
     it('dispatches the SIGNIN_REQUEST and SIGNIN_ERROR actions for an unsuccessful request', () => {
-      var user = {username: 'bob', name: 'Bob', password: 'pass123'};
+      var user = {username: 'bob', password: 'pass123'};
       nock(config.SERVER)
         .post('/signin', user)
         .replyWithError('Error: Request failed with status code 401')
@@ -147,7 +147,7 @@ describe('auth reducer:', function () {
         signInError: null
       })
 
-      return store.dispatch(actions.signIn(user.username, user.name, user.password))
+      return store.dispatch(actions.signIn(user.username, user.password))
         .then(() => {
           store.getActions().forEach(({type}, i) => {
             expect(type).to.equal(expectedActions[i].type);
