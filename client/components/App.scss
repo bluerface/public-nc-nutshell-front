@@ -6,6 +6,19 @@ body {
   font-family: sans-serif;
 }
 
+.signin-background {
+  background: url(http://cdn.deccanchronicle.com/sites/default/files/mediaimages/gallery/2015/Sep/taare%20zameen%20par.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 p {
   margin-top: 0px;
 }
@@ -72,4 +85,10 @@ p {
       text-decoration: underline;
     }
   }
+}
+
+.center-children {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

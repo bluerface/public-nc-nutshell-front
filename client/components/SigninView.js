@@ -6,9 +6,11 @@ import config from '../../config';
 
 const SigninView = function (props) {
   return (
-      <div>
-        <RaisedButton label='Signin as staff' secondary onTouchTap={props.signinStaff}/> <br />
-        <RaisedButton label='Signin as student' secondary  onTouchTap={props.signinStudent} />
+      <div className="signin-background center-children">
+        <div>
+          <RaisedButton label='Sign in as staff' secondary fullWidth onTouchTap={props.signinStaff} style={{marginBottom: '10px'}}/> <br />
+          <RaisedButton label='Sign in as student' secondary fullWidth onTouchTap={props.signinStudent} />
+        </div>
       </div>
   )
 }
