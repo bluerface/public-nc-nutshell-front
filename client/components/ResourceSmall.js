@@ -24,7 +24,14 @@ function ResourceSmall ({resource}) {
     icon = iconMap['github'];
   }
 
-  if (type === 'file' || type === 'link') {
+  if (type === 'file') {
+    main = <a
+      className='link trunkate-line'
+      href={resource.url}
+      target='_blank'>
+        {resource.filename}
+      </a>;
+  } else if (type === 'link') {
     main = <a
       className='link trunkate-line'
       href={resource.url}

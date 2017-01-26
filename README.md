@@ -1,6 +1,8 @@
 ### Deployment
 1. checkout a throwaway branch  
-2. `$ npm run build`  
-3. remove bundle.js from the .gitignore
-3. commit your changes
-4. `$ git push heroku branchname:master`  
+2. check config files
+3. `$ npm run build`  
+4. remove bundle.js from the .gitignore
+5. remove the test script from package json to avoid the precommit hook failure
+5. commit your changes
+6. `$ git push heroku branchname:master`  

@@ -3,6 +3,7 @@ import enhanceWithClickOutside from 'react-click-outside';
 import {connect} from 'react-redux';
 import actions from '../actions';
 import AddLink from './AddLink';
+import AddFile from './AddFile';
 import AddSnippet from './AddSnippet';
 import './AddResource.scss';
 
@@ -43,7 +44,7 @@ class AddResource extends React.Component {
           <AddLink addEventResource={this.addEventResource} />
         }
         {this.state.type === 'file' &&
-          <div>Add new file here</div>
+          <AddFile addEventResource={this.addEventResource} />
         }
         {this.state.type === 'snippet' &&
           <AddSnippet addEventResource={this.addEventResource} />
