@@ -65,8 +65,8 @@ const mapStateToProps = (state) => ({
   focusedEvent: state.calendar.focusedEvent,
   eventObj: getEventById(state, state.calendar.focusedEvent),
   eventFormFocused: state.calendar.eventForm.focused,
-  isStaff: state.auth.currentUser.role === 'staff',
-  user: state.auth.currentUser.name
+  isStaff: !!state.auth.currentUser && state.auth.currentUser.role === 'staff',
+  user: state.auth.currentUser ? state.auth.currentUser.name : ''
 })
 
 const mapDispatchToProps = (dispatch) => ({
