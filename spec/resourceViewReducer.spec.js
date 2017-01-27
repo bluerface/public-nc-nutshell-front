@@ -4,21 +4,21 @@ import resourceViewReducer, {getTopicSlugs, getTypeSlugs} from '../client/reduce
 import actions from '../client/actions';
 
 var tag = {
-  id: 1,
+  _id: 1,
   title: 'Further Reading',
   slug: 'further_reading',
   category: 'type'
 };
 
 var tag2 = {
-  id: 4,
+  _id: 4,
   title: 'React',
   slug: 'react',
   category: 'topic'
 };
 
 var tag3 = {
-  id: 6,
+  _id: 6,
   title: 'Redux',
   slug: 'redux',
   category: 'topic'

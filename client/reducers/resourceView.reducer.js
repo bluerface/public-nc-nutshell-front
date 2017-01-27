@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
       break;
 
     case types.REMOVE_FILTER:
-      newState.currentFilters = state.currentFilters.filter((tag) => tag.id !== action.tag.id);
+      newState.currentFilters = state.currentFilters.filter((tag) => tag._id !== action.tag._id);
       break;
 
     case types.FETCH_TAGS_REQUEST:

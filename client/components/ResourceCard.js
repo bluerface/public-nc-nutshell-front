@@ -1,7 +1,8 @@
 import React from 'react';
-import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import Chip from 'material-ui/Chip';
+import getIconName from '../utils/getIconName';
+import Markdown from './Markdown';
 
 var chipContainer = {
   display: 'flex',
@@ -12,9 +13,10 @@ function ResourceCard ({resource}) {
   var title;
   var url;
   var text;
+  var icon = getIconName(resource);
 
   if (resource.type === 'link') {
-    // title = 'Article';
+    title = resource.title;
     url = resource.url;
   }
 
@@ -29,23 +31,38 @@ function ResourceCard ({resource}) {
 
   return (
     <Paper>
-      <Card containerStyle={{marginBottom: '20px'}}>
-        {(title || url) && <CardTitle title={title} subtitle={<a href={url} target='_blank'> {url} </a>} />}
-        {text &&
-          <CardText>
-            <div style={{marginBottom: '5px', fontFamily: 'monospace'}}>
-              {text}
+      <div style={{marginBottom: '20px', display: 'flex', padding: '20px 20px 20px 0'}}>
+
+        <div style={{width: '80px'}} className='center-children'>
+          <i className={`fa fa-${icon} fa-2x grey`} ></i>
+        </div>
+
+        <div>
+          <span className='resource-title'>
+            <a href={url} target='_blank'> {title} </a>
+          </span>
+
+          {resource.type === 'link' &&
+            <div className='resource-url'>
+              <a href={url} target='_blank'>{url.slice(0, 40) + '...'} </a>
             </div>
-          </CardText>
-        }
-        <CardActions style={chipContainer}>
-          {
-            resource.tags.map((tag) => (
-              <Chip key={tag._id} style={{marginRight: 6}}>{tag.slug}</Chip>
-            ))
           }
-        </CardActions>
-      </Card>
+
+          {text &&
+              <div style={{marginBottom: '20px', fontFamily: 'monospace'}}>
+                <Markdown code={text} />
+              </div>
+          }
+
+          <div style={chipContainer}>
+            {
+              resource.tags.map((tag, i) => (
+                <Chip key={i.toString() + tag.slug} style={{marginRight: 6}}>{tag.slug}</Chip>
+              ))
+            }
+          </div>
+        </div>
+      </div>
     </Paper>
   )
 }

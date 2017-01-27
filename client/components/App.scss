@@ -1,10 +1,23 @@
 $grey400: #BDBDBD;
 
+// default styles -------------------
+
 body {
   margin: 0 0 0 0;
   padding: 1px;
   font-family: sans-serif;
 }
+
+p {
+  margin-top: 0px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// other styles ----------------------
 
 .signin-background {
   background: url(http://cdn.deccanchronicle.com/sites/default/files/mediaimages/gallery/2015/Sep/taare%20zameen%20par.jpg) no-repeat center center fixed;
@@ -17,10 +30,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-}
-
-p {
-  margin-top: 0px;
 }
 
 .box {
@@ -46,6 +55,7 @@ p {
   margin: 80px 20px 20px 20px;
   padding: 0px;
 }
+
 .fixed {
   top: 0;
   left: 0;
@@ -91,4 +101,26 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.grey {
+  color: $grey400;
+}
+
+.resource-title {
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.870588);
+  display: block;
+  line-height: 36px;
+  margin-bottom: 15px;
+}
+.resource-url {
+  margin-top: -15px;
+  margin-bottom: 20px;
+  font-style: italic;
+  font-size: 0.9em;
+  color: $grey400;
+  a:hover {
+    text-decoration: underline;
+  }
 }

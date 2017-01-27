@@ -1,4 +1,5 @@
 import React from 'react';
+import getIconName from '../utils/getIconName';
 
 var styles = {
   icon: {
@@ -10,19 +11,9 @@ var styles = {
 }
 
 function ResourceSmall ({resource}) {
-  var iconMap = {
-    file: 'file-text',
-    link: 'bookmark', // alternatives are bookmark-o and book
-    snippet: 'code',
-    github: 'github' // alternatives are the various gits and code-fork
-  }
   var type = resource.type;
-  var icon = iconMap[type];
+  var icon = getIconName(resource);
   var main;
-
-  if(type === 'link' && resource.url.includes('github')) {
-    icon = iconMap['github'];
-  }
 
   if (type === 'file') {
     main = <a

@@ -19,8 +19,12 @@ class Markdown extends React.Component {
     return { __html: rawMarkup };
   }
   render() {
-    return <div dangerouslySetInnerHTML={this.getMarkdownText(readme)} />
+    return <div dangerouslySetInnerHTML={this.getMarkdownText(this.props.code || readme)} />
   }
+}
+
+Markdown.propTypes = {
+  code: React.PropTypes.string
 }
 
 export default Markdown;
