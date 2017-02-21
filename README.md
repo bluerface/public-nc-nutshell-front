@@ -7,6 +7,23 @@ A student portal SPA designed for use by northcoders students.
 The backend: https://github.com/northcoders/student-portal-api  
 Try the app: https://northcoders-nutshell.herokuapp.com/
 
+## Installation Instructions
+
+1. Clone the project into your desired folder
+2. Make sure you have node and npm installed
+3. Install all dependencies:  
+   `$ npm i`  
+4. To serve the code, run one of the two servers;    
+   Run the webpack dev server (served to localhost:8080);  
+   `$ npm run dev`  
+   Or use the express production server (served to localhost:3000);  
+   `$ npm run build`  
+   `$ npm start`
+5. Run the tests or the linting;  
+   `$ npm test`  
+   `$ npm run lint`  
+
+
 ## The concept
 
 Our app is a student portal designed for use by future northcoder students and tutors.
@@ -25,4 +42,5 @@ Other features may involve slack integration, task tracking and communication to
 * Amazon s3 client-side upload
 * Material-ui
 * React-big-calendar
-* mocha / chai reducer testing
+* Markdown parsing
+* mocha / chai
